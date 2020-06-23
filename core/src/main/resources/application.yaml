@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: zuppay-rest
+  jpa:
+    show-sql: true
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+  datasource:
+    platform: postgres
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/zuppay}
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASSWD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+server:
+  port: 0
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://eureka-ingress/eureka}
+  instance:
+    preferIpAddress: true
