@@ -1,5 +1,5 @@
-rootProject.name = "zuppay-rest"
+rootProject.name = 'zuppay-rest'
 
-include "core"
-include "dao"
-include "entity"
+include 'core'
+include 'dao'
+include 'entity'
