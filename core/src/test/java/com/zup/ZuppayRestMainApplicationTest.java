@@ -1,4 +1,4 @@
-package com.zup.core.infrasctructure;
+package com.zup;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
