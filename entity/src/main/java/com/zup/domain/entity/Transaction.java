@@ -1,7 +1,5 @@
 package com.zup.domain.entity;
 
-import com.zup.domain.enumerations.CurrencyEnum;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -11,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,35 +22,25 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @SuperBuilder
-public class Payment extends BaseEntity {
+@Data
+public class Transaction extends BaseEntity {
 
   @Id
   @NotNull
   @GeneratedValue(generator = "uuid2", strategy = GenerationType.IDENTITY)
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  private UUID paymentId;
+  private UUID transactionId;
+
+  @NotNull private LocalDate chargeDate;
 
   @Column(length = 100)
   @NotNull
-  private String productId;
-
-  @Column(length = 100)
-  @NotNull
-  private String description;
-
-  @NotNull private LocalDate dueDate;
-
-  @NotNull
-  @Column(precision = 2, scale = 2)
-  private BigDecimal money;
-
-  @NotNull private CurrencyEnum currency;
-
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-  private CreditCard creditCard;
+  private String paymentStatus;
 
   @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-  private Transaction transaction;
+  private Payment payment;
+
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+  private CreditCard creditCard;
 }
