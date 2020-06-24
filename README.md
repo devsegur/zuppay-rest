@@ -1,3 +1,7 @@
+
+### Project Status
+![Zuppay - REST](https://github.com/efres/zuppay-rest/workflows/Zuppay%20-%20REST/badge.svg?branch=master)
+
 # zuppay-rest
 Zuppay Recurrence is a challenge to Zup enterprise
 
