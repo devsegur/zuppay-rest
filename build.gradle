@@ -44,7 +44,7 @@ allprojects {
 
 	test {
 		useJUnitPlatform {
-    	     excludeTags("slow")
+			excludeTags("slow")
 		}
 	}
 }
