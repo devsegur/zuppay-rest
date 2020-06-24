@@ -8,42 +8,42 @@ import org.junit.platform.commons.util.ReflectionUtils;
 class BaseEntityTest {
 
   @Test
-  void getCreatedDate() {
+  void mustHaveGetCreatedDate() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             BaseEntity.class, method -> method.getName().equals("getCreatedDate")));
   }
 
   @Test
-  void getUpdatedDate() {
+  void mustHaveGetUpdatedDate() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             BaseEntity.class, method -> method.getName().equals("getUpdatedDate")));
   }
 
   @Test
-  void getDeletedDate() {
+  void mustHaveGetDeletedDate() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             BaseEntity.class, method -> method.getName().equals("getDeletedDate")));
   }
 
   @Test
-  void setCreatedDate() {
+  void mustHaveSetCreatedDate() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             BaseEntity.class, method -> method.getName().equals("setCreatedDate")));
   }
 
   @Test
-  void setUpdatedDate() {
+  void mustHaveSetUpdatedDate() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             BaseEntity.class, method -> method.getName().equals("setUpdatedDate")));
   }
 
   @Test
-  void setDeletedDate() {
+  void mustHaveSetDeletedDate() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             BaseEntity.class, method -> method.getName().equals("setDeletedDate")));

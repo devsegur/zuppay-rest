@@ -8,70 +8,70 @@ import org.junit.platform.commons.util.ReflectionUtils;
 class TransactionTest {
 
   @Test
-  void getTransactionId() {
+  void mustHaveGetTransactionId() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Transaction.class, method -> method.getName().equals("getTransactionId")));
   }
 
   @Test
-  void getChargeDate() {
+  void mustHaveGetChargeDate() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Transaction.class, method -> method.getName().equals("getChargeDate")));
   }
 
   @Test
-  void getPaymentStatus() {
+  void mustHaveGetPaymentStatus() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Transaction.class, method -> method.getName().equals("getPaymentStatus")));
   }
 
   @Test
-  void getPayment() {
+  void mustHaveGetPayment() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Transaction.class, method -> method.getName().equals("getPayment")));
   }
 
   @Test
-  void getCreditCard() {
+  void mustHaveGetCreditCard() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Transaction.class, method -> method.getName().equals("getCreditCard")));
   }
 
   @Test
-  void setTransactionId() {
+  void mustHaveSetTransactionId() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Transaction.class, method -> method.getName().equals("setTransactionId")));
   }
 
   @Test
-  void setChargeDate() {
+  void mustHaveSetChargeDate() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Transaction.class, method -> method.getName().equals("setChargeDate")));
   }
 
   @Test
-  void setPaymentStatus() {
+  void mustHaveSetPaymentStatus() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Transaction.class, method -> method.getName().equals("setPaymentStatus")));
   }
 
   @Test
-  void setPayment() {
+  void mustHaveSetPayment() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Transaction.class, method -> method.getName().equals("setPayment")));
   }
 
   @Test
-  void setCreditCard() {
+  void mustHaveSetCreditCard() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Transaction.class, method -> method.getName().equals("setCreditCard")));

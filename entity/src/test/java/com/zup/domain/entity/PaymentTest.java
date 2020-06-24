@@ -8,98 +8,98 @@ import org.junit.platform.commons.util.ReflectionUtils;
 class PaymentTest {
 
   @Test
-  void getPaymentId() {
+  void mustHaveGetPaymentId() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("getPaymentId")));
   }
 
   @Test
-  void getCreditCard() {
+  void mustHaveGetCreditCard() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("getCreditCard")));
   }
 
   @Test
-  void getProductId() {
+  void mustHaveGetProductId() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("getProductId")));
   }
 
   @Test
-  void getDescription() {
+  void mustHaveGetDescription() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("getDescription")));
   }
 
   @Test
-  void getDueDate() {
+  void mustHaveGetDueDate() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("getDueDate")));
   }
 
   @Test
-  void getMoney() {
+  void mustHaveGetMoney() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("getMoney")));
   }
 
   @Test
-  void getCurrency() {
+  void mustHaveGetCurrency() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("getCurrency")));
   }
 
   @Test
-  void setPaymentId() {
+  void mustHaveSetPaymentId() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("setPaymentId")));
   }
 
   @Test
-  void setCreditCard() {
+  void mustHaveSetCreditCard() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("setCreditCard")));
   }
 
   @Test
-  void setProductId() {
+  void mustHaveSetProductId() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("setProductId")));
   }
 
   @Test
-  void setDescription() {
+  void mustHaveSetDescription() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("setDescription")));
   }
 
   @Test
-  void setDueDate() {
+  void mustHaveSetDueDate() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("setDueDate")));
   }
 
   @Test
-  void setMoney() {
+  void mustHaveSetMoney() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("setMoney")));
   }
 
   @Test
-  void setCurrency() {
+  void mustHaveSetCurrency() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             Payment.class, method -> method.getName().equals("setCurrency")));

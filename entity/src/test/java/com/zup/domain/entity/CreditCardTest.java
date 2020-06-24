@@ -8,70 +8,70 @@ import org.junit.platform.commons.util.ReflectionUtils;
 class CreditCardTest {
 
   @Test
-  void getCreditCardId() {
+  void mustHaveGetCreditCardId() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             CreditCard.class, method -> method.getName().equals("getCreditCardId")));
   }
 
   @Test
-  void getOwnerName() {
+  void mustHaveGetOwnerName() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             CreditCard.class, method -> method.getName().equals("getOwnerName")));
   }
 
   @Test
-  void getCardNumber() {
+  void mustHaveGetCardNumber() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             CreditCard.class, method -> method.getName().equals("getCardNumber")));
   }
 
   @Test
-  void getExpirationDate() {
+  void mustHaveGetExpirationDate() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             CreditCard.class, method -> method.getName().equals("getExpirationDate")));
   }
 
   @Test
-  void getSecurityCode() {
+  void mustHaveGetSecurityCode() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             CreditCard.class, method -> method.getName().equals("getSecurityCode")));
   }
 
   @Test
-  void setCreditCardId() {
+  void mustHaveSetCreditCardId() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             CreditCard.class, method -> method.getName().equals("setCreditCardId")));
   }
 
   @Test
-  void setOwnerName() {
+  void mustHaveSetOwnerName() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             CreditCard.class, method -> method.getName().equals("setOwnerName")));
   }
 
   @Test
-  void setCardNumber() {
+  void mustHaveSetCardNumber() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             CreditCard.class, method -> method.getName().equals("setCardNumber")));
   }
 
   @Test
-  void setExpirationDate() {
+  void mustHaveSetExpirationDate() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             CreditCard.class, method -> method.getName().equals("setExpirationDate")));
   }
 
   @Test
-  void setSecurityCode() {
+  void mustHaveSetSecurityCode() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             CreditCard.class, method -> method.getName().equals("setSecurityCode")));
