@@ -1,4 +1,3 @@
 dependencies {
-	compileOnly 'org.projectlombok:lombok:1.18.12'
-	annotationProcessor 'org.projectlombok:lombok:1.18.12'
+	compileOnly "javax.validation:validation-api:${libJavaxValidationVersion}"
 }

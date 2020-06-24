@@ -1,21 +1,19 @@
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-rest:2.3.1.RELEASE'
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc:2.3.1.RELEASE'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux:2.3.1.RELEASE'
-	implementation 'de.codecentric:spring-boot-admin-starter-client'
-	implementation 'org.springframework.cloud:spring-cloud-starter'
-	implementation 'org.springframework.cloud:spring-cloud-starter-config'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:2.2.3.RELEASE'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok:1.18.12'
-	implementation 'org.springframework.boot:spring-boot-devtools:2.3.1.RELEASE'
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok:1.18.12'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	implementation "org.springframework.boot:spring-boot-starter-actuator"
+	implementation "org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}"
+	implementation "de.codecentric:spring-boot-admin-starter-client"
+	implementation "org.springframework.cloud:spring-cloud-starter"
+	implementation "org.springframework.cloud:spring-cloud-starter-config"
+	implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:${netflixEurekaClientVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-web"
+	implementation "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
+	runtimeOnly "com.h2database:h2"
+	runtimeOnly "io.micrometer:micrometer-registry-prometheus"
+	runtimeOnly "org.postgresql:postgresql"
+	testImplementation("org.springframework.boot:spring-boot-starter-test") {
+		exclude group: "org.junit.vintage", module: "junit-vintage-engine"
 	}
-	testImplementation 'io.projectreactor:reactor-test'
+	testImplementation "io.projectreactor:reactor-test"
 }
