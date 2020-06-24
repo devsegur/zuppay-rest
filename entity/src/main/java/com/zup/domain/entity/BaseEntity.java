@@ -15,9 +15,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Data
 public class BaseEntity implements Serializable {
 
-  @CreatedDate
-  private LocalDateTime createdDate;
-  @LastModifiedDate
-  private LocalDateTime updatedDate;
+  @CreatedDate private LocalDateTime createdDate;
+  @LastModifiedDate private LocalDateTime updatedDate;
   private LocalDateTime deletedDate;
 }

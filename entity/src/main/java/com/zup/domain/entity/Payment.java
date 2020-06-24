@@ -32,8 +32,7 @@ public class Payment extends BaseEntity {
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   private UUID paymentId;
 
-  @ManyToOne
-  private CreditCard creditCard;
+  @ManyToOne private CreditCard creditCard;
 
   @Column(length = 100)
   @NotNull
@@ -43,13 +42,11 @@ public class Payment extends BaseEntity {
   @NotNull
   private String description;
 
-  @NotNull
-  private LocalDate dueDate;
+  @NotNull private LocalDate dueDate;
 
   @NotNull
   @Column(precision = 2, scale = 2)
   private BigDecimal money;
 
-  @NotNull
-  private CurrencyEnum currency;
+  @NotNull private CurrencyEnum currency;
 }
