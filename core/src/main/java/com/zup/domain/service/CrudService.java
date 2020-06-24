@@ -1,4 +1,4 @@
-package com.zup.domain.services;
+package com.zup.domain.service;
 
 import com.zup.domain.dto.BaseDTO;
 import reactor.core.publisher.Flux;

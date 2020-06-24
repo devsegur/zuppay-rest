@@ -1,4 +1,4 @@
-package com.zup.domain.services;
+package com.zup.domain.service;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,30 +9,30 @@ import org.junit.platform.commons.util.ReflectionUtils;
 class CrudServiceTest {
 
   @Test
-  void MustBeDeclaredMethodListAll() {
+  void mustBeDeclaredMethodListAll() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             CrudService.class, method -> method.getName().equals("listAll")));
   }
 
   @Test
-  void MustBeDeclaredMethodFindOneById() {
+  void mustBeDeclaredMethodFindOneById() {
     assertTrue(
         ReflectionUtils.findMethod(CrudService.class, "findOneById", Long.class).isPresent());
   }
 
   @Test
-  void MustBeDeclaredMethodSave() {
+  void mustBeDeclaredMethodSave() {
     assertTrue(ReflectionUtils.findMethod(CrudService.class, "save", BaseDTO.class).isPresent());
   }
 
   @Test
-  void MustBeDeclaredMethodUpdate() {
+  void mustBeDeclaredMethodUpdate() {
     assertTrue(ReflectionUtils.findMethod(CrudService.class, "update", BaseDTO.class).isPresent());
   }
 
   @Test
-  void MustBeDeclaredMethodDelete() {
+  void mustBeDeclaredMethodDelete() {
     assertTrue(ReflectionUtils.findMethod(CrudService.class, "delete", BaseDTO.class).isPresent());
   }
 }
