@@ -3,16 +3,13 @@ package com.zup.domain.entity;
 import com.zup.domain.enumerations.CurrencyEnum;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,8 +32,8 @@ public class Payment extends BaseEntity {
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   private UUID paymentId;
 
-  @OneToMany(mappedBy = "payment", fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-  private List<CreditCard> creditCard;
+  @ManyToOne
+  private CreditCard creditCard;
 
   @Column(length = 100)
   @NotNull
