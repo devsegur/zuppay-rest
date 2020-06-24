@@ -7,8 +7,5 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ZuppayRestMainApplicationTest {
 
   @Test
-  void grantApplicationStartup() {
-
-  }
-
+  void grantApplicationStartup() {}
 }
