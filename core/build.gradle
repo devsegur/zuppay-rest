@@ -1,4 +1,9 @@
+
+
 dependencies {
+	implementation project(":dto")
+	implementation project(":entity")
+
 	implementation "org.springframework.boot:spring-boot-starter-actuator"
 	implementation "org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
@@ -9,9 +14,9 @@ dependencies {
 	implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:${netflixEurekaClientVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-web"
 	implementation "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
-	runtimeOnly "com.h2database:h2"
 	runtimeOnly "io.micrometer:micrometer-registry-prometheus"
-	runtimeOnly "org.postgresql:postgresql"
+	runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
+	testRuntimeOnly "com.h2database:h2"
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude group: "org.junit.vintage", module: "junit-vintage-engine"
 	}
