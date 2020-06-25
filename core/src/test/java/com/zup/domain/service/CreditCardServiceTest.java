@@ -83,7 +83,31 @@ class CreditCardServiceTest {
   }
 
   @Test
-  void save() {}
+  void save() {
+
+    var creditCardUuid = UUID.fromString("4002-8922-1490-9141-2222");
+    var transactionRandomUuid = UUID.randomUUID();
+    var paymentRandomUuid = ImmutableList.of(UUID.randomUUID());
+    CreditCard creditCard =
+        buildCreditCard(
+            creditCardUuid, transactionRandomUuid, "0000 2222 1111 2222", "So-and-so", "007");
+    var expectedResponse =
+        buildCreditCardDTO(
+            creditCardUuid,
+            transactionRandomUuid,
+            paymentRandomUuid,
+            "0000 2222 1111 2222",
+            "So-and-so",
+            "007");
+
+    when(mapper.map(expectedResponse)).thenReturn(creditCard);
+    when(mapper.map(creditCard)).thenReturn(expectedResponse);
+    when(repository.save(creditCard)).thenReturn(creditCard);
+    var response = service.save(expectedResponse);
+
+    assertThat(response, is(equalTo(expectedResponse)));
+
+  }
 
   @Test
   void update() {}

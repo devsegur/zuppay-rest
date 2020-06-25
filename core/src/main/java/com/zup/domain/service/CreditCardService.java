@@ -28,7 +28,8 @@ public class CreditCardService implements CrudService<CreditCardDTO> {
 
   @Override
   public CreditCardDTO save(CreditCardDTO dto) {
-    return null;
+    var entity = mapper.map(dto);
+    return mapper.map(repository.save(entity));
   }
 
   @Override
