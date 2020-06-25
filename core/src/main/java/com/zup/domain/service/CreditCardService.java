@@ -3,13 +3,17 @@ package com.zup.domain.service;
 import static java.util.Optional.ofNullable;
 
 import com.zup.domain.dto.CreditCardDTO;
+import com.zup.domain.entity.CreditCard;
 import com.zup.domain.mapper.CreditCardMapper;
 import com.zup.infrasctructure.repository.CreditCardRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang.SerializationUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -51,6 +55,20 @@ public class CreditCardService implements CrudService<CreditCardDTO> {
 
   @Override
   public CreditCardDTO delete(CreditCardDTO dto) {
-    return null;
+    return ofNullable(dto)
+        .filter(ifExistsOnDatabase())
+        .map(mapper::map)
+        .map(setCardDeleted())
+        .map(repository::save)
+        .map(mapper::map)
+        .orElse(null);
+  }
+
+  private Function<CreditCard, CreditCard> setCardDeleted() {
+    return card -> {
+      CreditCard clonedCard = ((CreditCard) SerializationUtils.clone(card));
+      clonedCard.setDeletedDate(LocalDateTime.now());
+      return clonedCard;
+    };
   }
 }

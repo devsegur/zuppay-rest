@@ -12,6 +12,7 @@ import com.zup.domain.entity.CreditCard;
 import com.zup.domain.entity.Transaction;
 import com.zup.domain.mapper.CreditCardMapper;
 import com.zup.infrasctructure.repository.CreditCardRepository;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
@@ -116,7 +117,31 @@ class CreditCardServiceTest {
   }
 
   @Test
-  void delete() {}
+  void delete() {
+    var creditCardUuid = UUID.fromString("4002-8922-1490-9141-2222");
+    var cardNumber = "0000 2222 1111 2222";
+    var securityCode = "007";
+    var pastOwnerName = "So-and-so";
+    var thenOwnerName = "So-and-so-more";
+    var deletedDate = LocalDateTime.now();
+    var transactionRandomUuid = UUID.randomUUID();
+    var paymentRandomUuid = ImmutableList.of(UUID.randomUUID());
+    var creditCard =
+        buildCreditCard(
+            creditCardUuid, transactionRandomUuid, cardNumber, pastOwnerName, securityCode);
+    CreditCardDTO expectedResponse =
+        buildCreditCardDTO(
+            creditCardUuid, paymentRandomUuid, cardNumber, thenOwnerName, securityCode);
+    expectedResponse.setDeletedDate(deletedDate);
+
+    when(mapper.map(expectedResponse)).thenReturn(creditCard);
+    when(mapper.map(creditCard)).thenReturn(expectedResponse);
+    when(repository.save(creditCard)).thenReturn(creditCard);
+    when(repository.existsById(expectedResponse.getCreditCardId())).thenReturn(true);
+    var response = service.delete(expectedResponse);
+
+    assertThat(response, is(equalTo(expectedResponse)));
+  }
 
   private CreditCard buildCreditCard(
       UUID creditCardUuid,
