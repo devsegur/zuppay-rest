@@ -1,10 +1,13 @@
 package com.zup.domain.service;
 
+import static java.util.Optional.ofNullable;
+
 import com.zup.domain.dto.CreditCardDTO;
 import com.zup.domain.mapper.CreditCardMapper;
 import com.zup.infrasctructure.repository.CreditCardRepository;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,7 +37,16 @@ public class CreditCardService implements CrudService<CreditCardDTO> {
 
   @Override
   public CreditCardDTO update(CreditCardDTO dto) {
-    return null;
+    return ofNullable(dto)
+        .filter(ifExistsOnDatabase())
+        .map(mapper::map)
+        .map(repository::save)
+        .map(mapper::map)
+        .orElse(null);
+  }
+
+  private Predicate<CreditCardDTO> ifExistsOnDatabase() {
+    return optDTO -> repository.existsById(optDTO.getCreditCardId());
   }
 
   @Override

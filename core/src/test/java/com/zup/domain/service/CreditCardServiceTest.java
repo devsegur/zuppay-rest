@@ -34,25 +34,15 @@ class CreditCardServiceTest {
     var creditCardUuid = UUID.fromString("4002-8922-1490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
     var paymentRandomUuid = UUID.randomUUID();
-    var expectedResponse =
-        buildDTO(creditCardUuid, transactionRandomUuid, Collections.singleton(paymentRandomUuid));
+    var expectedResponse = buildDTO(creditCardUuid, Collections.singleton(paymentRandomUuid));
 
     when(repository.findAll()).thenReturn((buildEntity(creditCardUuid, transactionRandomUuid)));
     when(mapper.map(buildEntity(creditCardUuid, transactionRandomUuid).get(0)))
-        .thenReturn(
-            buildDTO(
-                    creditCardUuid, transactionRandomUuid, Collections.singleton(paymentRandomUuid))
-                .get(0));
+        .thenReturn(buildDTO(creditCardUuid, Collections.singleton(paymentRandomUuid)).get(0));
     when(mapper.map(buildEntity(creditCardUuid, transactionRandomUuid).get(1)))
-        .thenReturn(
-            buildDTO(
-                    creditCardUuid, transactionRandomUuid, Collections.singleton(paymentRandomUuid))
-                .get(1));
+        .thenReturn(buildDTO(creditCardUuid, Collections.singleton(paymentRandomUuid)).get(1));
     when(mapper.map(buildEntity(creditCardUuid, transactionRandomUuid).get(2)))
-        .thenReturn(
-            buildDTO(
-                    creditCardUuid, transactionRandomUuid, Collections.singleton(paymentRandomUuid))
-                .get(2));
+        .thenReturn(buildDTO(creditCardUuid, Collections.singleton(paymentRandomUuid)).get(2));
     var response = service.listAll();
 
     assertThat(response, is(equalTo(expectedResponse)));
@@ -62,18 +52,14 @@ class CreditCardServiceTest {
   void findOneById() {
     var creditCardUuid = UUID.fromString("4002-8922-1490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
+    var cardNumber = "0000 2222 1111 2222";
+    var securityCode = "007";
+    var ownerName = "So-and-so";
     var paymentRandomUuid = ImmutableList.of(UUID.randomUUID());
-    CreditCard creditCard =
-        buildCreditCard(
-            creditCardUuid, transactionRandomUuid, "0000 2222 1111 2222", "So-and-so", "007");
+    var creditCard =
+        buildCreditCard(creditCardUuid, transactionRandomUuid, cardNumber, ownerName, securityCode);
     var expectedResponse =
-        buildCreditCardDTO(
-            creditCardUuid,
-            transactionRandomUuid,
-            paymentRandomUuid,
-            "0000 2222 1111 2222",
-            "So-and-so",
-            "007");
+        buildCreditCardDTO(creditCardUuid, paymentRandomUuid, cardNumber, ownerName, securityCode);
 
     when(repository.findById(creditCardUuid)).thenReturn(ofNullable(creditCard));
     when(mapper.map(creditCard)).thenReturn(expectedResponse);
@@ -86,19 +72,15 @@ class CreditCardServiceTest {
   void save() {
 
     var creditCardUuid = UUID.fromString("4002-8922-1490-9141-2222");
+    var cardNumber = "0000 2222 1111 2222";
+    var securityCode = "007";
+    var ownerName = "So-and-so";
     var transactionRandomUuid = UUID.randomUUID();
     var paymentRandomUuid = ImmutableList.of(UUID.randomUUID());
-    CreditCard creditCard =
-        buildCreditCard(
-            creditCardUuid, transactionRandomUuid, "0000 2222 1111 2222", "So-and-so", "007");
+    var creditCard =
+        buildCreditCard(creditCardUuid, transactionRandomUuid, cardNumber, ownerName, securityCode);
     var expectedResponse =
-        buildCreditCardDTO(
-            creditCardUuid,
-            transactionRandomUuid,
-            paymentRandomUuid,
-            "0000 2222 1111 2222",
-            "So-and-so",
-            "007");
+        buildCreditCardDTO(creditCardUuid, paymentRandomUuid, cardNumber, ownerName, securityCode);
 
     when(mapper.map(expectedResponse)).thenReturn(creditCard);
     when(mapper.map(creditCard)).thenReturn(expectedResponse);
@@ -106,11 +88,32 @@ class CreditCardServiceTest {
     var response = service.save(expectedResponse);
 
     assertThat(response, is(equalTo(expectedResponse)));
-
   }
 
   @Test
-  void update() {}
+  void update() {
+    var creditCardUuid = UUID.fromString("4002-8922-1490-9141-2222");
+    var cardNumber = "0000 2222 1111 2222";
+    var securityCode = "007";
+    var pastOwnerName = "So-and-so";
+    var thenOwnerName = "So-and-so-more";
+    var transactionRandomUuid = UUID.randomUUID();
+    var paymentRandomUuid = ImmutableList.of(UUID.randomUUID());
+    var creditCard =
+        buildCreditCard(
+            creditCardUuid, transactionRandomUuid, cardNumber, pastOwnerName, securityCode);
+    var expectedResponse =
+        buildCreditCardDTO(
+            creditCardUuid, paymentRandomUuid, cardNumber, thenOwnerName, securityCode);
+
+    when(mapper.map(expectedResponse)).thenReturn(creditCard);
+    when(mapper.map(creditCard)).thenReturn(expectedResponse);
+    when(repository.save(creditCard)).thenReturn(creditCard);
+    when(repository.existsById(expectedResponse.getCreditCardId())).thenReturn(true);
+    var response = service.update(expectedResponse);
+
+    assertThat(response, is(equalTo(expectedResponse)));
+  }
 
   @Test
   void delete() {}
@@ -125,7 +128,8 @@ class CreditCardServiceTest {
         .creditCardId(creditCardUuid)
         .cardNumber(cardNumber)
         .ownerName(ownerName)
-        .transaction(Transaction.builder().transactionId(transactionRandomUuid).build())
+        .transaction(
+            ImmutableList.of(Transaction.builder().transactionId(transactionRandomUuid).build()))
         .securityCode(securityCode)
         .build();
   }
@@ -141,29 +145,15 @@ class CreditCardServiceTest {
   }
 
   private ImmutableList<CreditCardDTO> buildDTO(
-      UUID creditCardUuid, UUID transactionRandomUuid, Collection<UUID> paymentRandomUuid) {
+      UUID creditCardUuid, Collection<UUID> paymentRandomUuid) {
     return ImmutableList.of(
-        buildCreditCardDTO(
-            creditCardUuid, transactionRandomUuid, null, "0000 2222 1111 2222", "So-and-so", "007"),
-        buildCreditCardDTO(
-            creditCardUuid,
-            transactionRandomUuid,
-            null,
-            "0001 2222 1111 2222",
-            "So-and-so-Jr",
-            "008"),
-        buildCreditCardDTO(
-            creditCardUuid,
-            transactionRandomUuid,
-            null,
-            "0000 2222 1111 2222",
-            "So-and-so",
-            "009"));
+        buildCreditCardDTO(creditCardUuid, null, "0000 2222 1111 2222", "So-and-so", "007"),
+        buildCreditCardDTO(creditCardUuid, null, "0001 2222 1111 2222", "So-and-so-Jr", "008"),
+        buildCreditCardDTO(creditCardUuid, null, "0000 2222 1111 2222", "So-and-so", "009"));
   }
 
   private CreditCardDTO buildCreditCardDTO(
       UUID creditCardUuid,
-      UUID transactionRandomUuid,
       Collection<UUID> payments,
       String cardNumber,
       String ownerName,
@@ -173,7 +163,6 @@ class CreditCardServiceTest {
         .payment(payments)
         .cardNumber(cardNumber)
         .ownerName(ownerName)
-        .transaction(transactionRandomUuid)
         .securityCode(securityCode)
         .build();
   }
