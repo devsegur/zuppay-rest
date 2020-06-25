@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -52,6 +51,6 @@ public class CreditCard extends BaseEntity {
   @OneToMany(mappedBy = "creditCard", fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
   private Collection<Payment> payment;
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-  private Transaction transaction;
+  @OneToMany(mappedBy = "creditCard", fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+  private Collection<Transaction> transaction;
 }

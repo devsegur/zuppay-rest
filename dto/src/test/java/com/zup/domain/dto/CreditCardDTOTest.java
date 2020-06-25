@@ -50,13 +50,6 @@ class CreditCardDTOTest {
   }
 
   @Test
-  void mustHaveGetTransaction() {
-    assertTrue(
-        ReflectionUtils.isMethodPresent(
-            CreditCardDTO.class, method -> method.getName().equals("getTransaction")));
-  }
-
-  @Test
   void mustHaveSetCreditCardId() {
     assertTrue(
         ReflectionUtils.isMethodPresent(
@@ -96,12 +89,5 @@ class CreditCardDTOTest {
     assertTrue(
         ReflectionUtils.isMethodPresent(
             CreditCardDTO.class, method -> method.getName().equals("setPayment")));
-  }
-
-  @Test
-  void mustHaveSetTransaction() {
-    assertTrue(
-        ReflectionUtils.isMethodPresent(
-            CreditCardDTO.class, method -> method.getName().equals("setTransaction")));
   }
 }
