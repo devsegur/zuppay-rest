@@ -26,6 +26,4 @@ public class CreditCardDTO extends BaseDTO {
   private String securityCode;
 
   private Collection<UUID> payment;
-
-  private UUID transaction;
 }

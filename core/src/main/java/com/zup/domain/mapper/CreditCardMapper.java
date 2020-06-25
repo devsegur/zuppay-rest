@@ -3,7 +3,6 @@ package com.zup.domain.mapper;
 import com.zup.domain.dto.CreditCardDTO;
 import com.zup.domain.entity.CreditCard;
 import com.zup.domain.entity.Payment;
-import com.zup.domain.entity.Transaction;
 import java.util.Collection;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -20,10 +19,7 @@ public abstract class CreditCardMapper {
     @Mapping(source = "cardNumber", target = "cardNumber"),
     @Mapping(source = "expirationDate", target = "expirationDate"),
     @Mapping(source = "securityCode", target = "securityCode"),
-    @Mapping(expression = "java(getPaymentUuid(card.getPayment()))", target = "payment"),
-    @Mapping(
-        expression = "java(getTransactionUuid(card.getTransaction()))",
-        target = "transaction"),
+    @Mapping(expression = "java(getPaymentUuid(card.getPayment()))", target = "payment")
   })
   public abstract CreditCardDTO map(CreditCard card);
 
@@ -33,8 +29,7 @@ public abstract class CreditCardMapper {
     @Mapping(source = "cardNumber", target = "cardNumber"),
     @Mapping(source = "expirationDate", target = "expirationDate"),
     @Mapping(source = "securityCode", target = "securityCode"),
-    @Mapping(expression = "java(getPayments(dto.getPayment()))", target = "payment"),
-    @Mapping(expression = "java(getTransactions(dto.getTransaction()))", target = "transaction"),
+    @Mapping(expression = "java(getPayments(dto.getPayment()))", target = "payment")
   })
   public abstract CreditCard map(CreditCardDTO dto);
 
@@ -46,13 +41,5 @@ public abstract class CreditCardMapper {
 
   protected Collection<UUID> getPaymentUuid(Collection<Payment> payments) {
     return payments.parallelStream().map(Payment::getPaymentId).collect(Collectors.toList());
-  }
-
-  protected Transaction getTransactions(UUID uuid) {
-    return Transaction.builder().transactionId(uuid).build();
-  }
-
-  protected UUID getTransactionUuid(Transaction transaction) {
-    return transaction.getTransactionId();
   }
 }
