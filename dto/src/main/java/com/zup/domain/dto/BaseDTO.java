@@ -1,6 +1,6 @@
 package com.zup.domain.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 public class BaseDTO {
-  private LocalDate createdDate;
-  private LocalDate updatedDate;
-  private LocalDate deletedDate;
+  private LocalDateTime createdDate;
+  private LocalDateTime updatedDate;
+  private LocalDateTime deletedDate;
 }
