@@ -16,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class PaymentDTO extends BaseDTO {
+
   private UUID paymentId;
 
   private String productId;
@@ -28,7 +29,7 @@ public class PaymentDTO extends BaseDTO {
 
   private CurrencyEnum currency;
 
-  private CreditCardDTO creditCard;
+  private UUID creditCard;
 
-  private TransactionDTO transaction;
+  private UUID transaction;
 }

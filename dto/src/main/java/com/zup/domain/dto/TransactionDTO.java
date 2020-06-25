@@ -21,7 +21,7 @@ public class TransactionDTO extends BaseDTO {
 
   private String paymentStatus;
 
-  private PaymentDTO payment;
+  private UUID payment;
 
-  private CreditCardDTO creditCard;
+  private UUID creditCard;
 }

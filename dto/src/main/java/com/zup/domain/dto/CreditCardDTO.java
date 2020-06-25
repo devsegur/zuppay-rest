@@ -1,5 +1,6 @@
 package com.zup.domain.dto;
 
+import java.util.Collection;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class CreditCardDTO extends BaseDTO {
 
   private String securityCode;
 
-  private PaymentDTO payment;
+  private Collection<UUID> payment;
 
-  private TransactionDTO transaction;
+  private UUID transaction;
 }
