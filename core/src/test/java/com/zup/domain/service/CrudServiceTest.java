@@ -3,6 +3,7 @@ package com.zup.domain.service;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.zup.domain.dto.BaseDTO;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.ReflectionUtils;
 
@@ -18,7 +19,7 @@ class CrudServiceTest {
   @Test
   void mustBeDeclaredMethodFindOneById() {
     assertTrue(
-        ReflectionUtils.findMethod(CrudService.class, "findOneById", Long.class).isPresent());
+        ReflectionUtils.findMethod(CrudService.class, "findOneById", UUID.class).isPresent());
   }
 
   @Test

@@ -1,18 +1,18 @@
 package com.zup.domain.service;
 
 import com.zup.domain.dto.BaseDTO;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import java.util.Collection;
+import java.util.UUID;
 
-public interface CrudService {
+public interface CrudService<T extends BaseDTO> {
 
-  Flux<BaseDTO> listAll();
+  Collection<T> listAll();
 
-  Mono<BaseDTO> findOneById(Long id);
+  T findOneById(UUID id);
 
-  Mono<BaseDTO> save(BaseDTO dto);
+  T save(T dto);
 
-  Mono<BaseDTO> update(BaseDTO dto);
+  T update(T dto);
 
-  Mono<BaseDTO> delete(BaseDTO dto);
+  T delete(T dto);
 }
