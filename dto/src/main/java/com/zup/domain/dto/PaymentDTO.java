@@ -1,9 +1,10 @@
 package com.zup.domain.dto;
 
-import com.zup.domain.dto.enumerations.CurrencyEnum;
+import com.zup.domain.enumerations.CurrencyEnumDTO;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
+import javax.validation.constraints.DecimalMax;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,9 +26,10 @@ public class PaymentDTO extends BaseDTO {
 
   private LocalDate dueDate;
 
+  @DecimalMax(value = "2")
   private BigDecimal money;
 
-  private CurrencyEnum currency;
+  private CurrencyEnumDTO currency;
 
   private UUID creditCard;
 

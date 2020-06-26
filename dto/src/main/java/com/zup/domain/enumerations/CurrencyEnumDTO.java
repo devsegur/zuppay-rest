@@ -1,18 +1,18 @@
-package com.zup.domain.dto.enumerations;
+package com.zup.domain.enumerations;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public enum CurrencyEnum {
+public enum CurrencyEnumDTO {
   USD("USD"),
   EUR("EUR"),
   BRL("BRL");
 
   private String value;
 
-  CurrencyEnum(String enumName) {
+  CurrencyEnumDTO(String enumName) {
     this.value = enumName;
   }
 }
