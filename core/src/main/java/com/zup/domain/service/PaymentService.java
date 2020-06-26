@@ -4,6 +4,7 @@ import static java.util.Optional.ofNullable;
 
 import com.zup.domain.dto.PaymentDTO;
 import com.zup.domain.entity.Payment;
+import com.zup.domain.exception.message.NotFoundedException;
 import com.zup.domain.mapper.PaymentMapper;
 import com.zup.infrasctructure.repository.PaymentRepository;
 import java.time.LocalDateTime;
@@ -29,8 +30,8 @@ public class PaymentService implements CrudService<PaymentDTO> {
   }
 
   @Override
-  public PaymentDTO findOneById(UUID uuid) {
-    return repository.findById(uuid).map(mapper::map).orElse(null);
+  public PaymentDTO findOneById(UUID uuid) throws NotFoundedException {
+    return repository.findById(uuid).map(mapper::map).orElseThrow(NotFoundedException::new);
   }
 
   @Override
@@ -40,24 +41,24 @@ public class PaymentService implements CrudService<PaymentDTO> {
   }
 
   @Override
-  public PaymentDTO update(PaymentDTO dto) {
+  public PaymentDTO update(PaymentDTO dto) throws NotFoundedException {
     return ofNullable(dto)
         .filter(ifExistsOnDatabase())
         .map(mapper::map)
         .map(repository::save)
         .map(mapper::map)
-        .orElse(null);
+        .orElseThrow(NotFoundedException::new);
   }
 
   @Override
-  public PaymentDTO delete(PaymentDTO dto) {
+  public PaymentDTO delete(PaymentDTO dto) throws NotFoundedException {
     return ofNullable(dto)
         .filter(ifExistsOnDatabase())
         .map(mapper::map)
         .map(setPaymentDeleted())
         .map(repository::save)
         .map(mapper::map)
-        .orElse(null);
+        .orElseThrow(NotFoundedException::new);
   }
 
   private Predicate<PaymentDTO> ifExistsOnDatabase() {

@@ -4,6 +4,7 @@ import static java.util.Optional.ofNullable;
 
 import com.zup.domain.dto.CreditCardDTO;
 import com.zup.domain.entity.CreditCard;
+import com.zup.domain.exception.message.NotFoundedException;
 import com.zup.domain.mapper.CreditCardMapper;
 import com.zup.infrasctructure.repository.CreditCardRepository;
 import java.time.LocalDateTime;
@@ -29,8 +30,8 @@ public class CreditCardService implements CrudService<CreditCardDTO> {
   }
 
   @Override
-  public CreditCardDTO findOneById(UUID uuid) {
-    return repository.findById(uuid).map(mapper::map).orElse(null);
+  public CreditCardDTO findOneById(UUID uuid) throws NotFoundedException {
+    return repository.findById(uuid).map(mapper::map).orElseThrow(NotFoundedException::new);
   }
 
   @Override
@@ -40,24 +41,24 @@ public class CreditCardService implements CrudService<CreditCardDTO> {
   }
 
   @Override
-  public CreditCardDTO update(CreditCardDTO dto) {
+  public CreditCardDTO update(CreditCardDTO dto) throws NotFoundedException {
     return ofNullable(dto)
         .filter(ifExistsOnDatabase())
         .map(mapper::map)
         .map(repository::save)
         .map(mapper::map)
-        .orElse(null);
+        .orElseThrow(NotFoundedException::new);
   }
 
   @Override
-  public CreditCardDTO delete(CreditCardDTO dto) {
+  public CreditCardDTO delete(CreditCardDTO dto) throws NotFoundedException {
     return ofNullable(dto)
         .filter(ifExistsOnDatabase())
         .map(mapper::map)
         .map(setCardDeleted())
         .map(repository::save)
         .map(mapper::map)
-        .orElse(null);
+        .orElseThrow(NotFoundedException::new);
   }
 
   private Predicate<CreditCardDTO> ifExistsOnDatabase() {

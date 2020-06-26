@@ -4,6 +4,7 @@ import static java.util.Optional.ofNullable;
 
 import com.zup.domain.dto.TransactionDTO;
 import com.zup.domain.entity.Transaction;
+import com.zup.domain.exception.message.NotFoundedException;
 import com.zup.domain.mapper.TransactionMapper;
 import com.zup.infrasctructure.repository.TransactionRepository;
 import java.time.LocalDateTime;
@@ -29,8 +30,8 @@ public class TransactionService implements CrudService<TransactionDTO> {
   }
 
   @Override
-  public TransactionDTO findOneById(UUID uuid) {
-    return repository.findById(uuid).map(mapper::map).orElse(null);
+  public TransactionDTO findOneById(UUID uuid) throws NotFoundedException {
+    return repository.findById(uuid).map(mapper::map).orElseThrow(NotFoundedException::new);
   }
 
   @Override
@@ -40,24 +41,24 @@ public class TransactionService implements CrudService<TransactionDTO> {
   }
 
   @Override
-  public TransactionDTO update(TransactionDTO dto) {
+  public TransactionDTO update(TransactionDTO dto) throws NotFoundedException {
     return ofNullable(dto)
         .filter(ifExistsOnDatabase())
         .map(mapper::map)
         .map(repository::save)
         .map(mapper::map)
-        .orElse(null);
+        .orElseThrow(NotFoundedException::new);
   }
 
   @Override
-  public TransactionDTO delete(TransactionDTO dto) {
+  public TransactionDTO delete(TransactionDTO dto) throws NotFoundedException {
     return ofNullable(dto)
         .filter(ifExistsOnDatabase())
         .map(mapper::map)
         .map(setTransactionDeleted())
         .map(repository::save)
         .map(mapper::map)
-        .orElse(null);
+        .orElseThrow(NotFoundedException::new);
   }
 
   private Predicate<TransactionDTO> ifExistsOnDatabase() {
