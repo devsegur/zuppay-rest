@@ -49,10 +49,6 @@ public class CreditCardService implements CrudService<CreditCardDTO> {
         .orElse(null);
   }
 
-  private Predicate<CreditCardDTO> ifExistsOnDatabase() {
-    return optDTO -> repository.existsById(optDTO.getCreditCardId());
-  }
-
   @Override
   public CreditCardDTO delete(CreditCardDTO dto) {
     return ofNullable(dto)
@@ -62,6 +58,10 @@ public class CreditCardService implements CrudService<CreditCardDTO> {
         .map(repository::save)
         .map(mapper::map)
         .orElse(null);
+  }
+
+  private Predicate<CreditCardDTO> ifExistsOnDatabase() {
+    return optDTO -> repository.existsById(optDTO.getCreditCardId());
   }
 
   private Function<CreditCard, CreditCard> setCardDeleted() {
