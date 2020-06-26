@@ -16,7 +16,6 @@ import com.zup.domain.mapper.CreditCardMapper;
 import com.zup.infrasctructure.repository.CreditCardRepository;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,16 +35,15 @@ class CreditCardServiceTest {
 
     var creditCardUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
-    var paymentRandomUuid = UUID.randomUUID();
-    var expectedResponse = buildDTO(creditCardUuid, Collections.singleton(paymentRandomUuid));
+    var expectedResponse = buildDTO(creditCardUuid);
 
     when(repository.findAll()).thenReturn((buildEntity(creditCardUuid, transactionRandomUuid)));
     when(mapper.map(buildEntity(creditCardUuid, transactionRandomUuid).get(0)))
-        .thenReturn(buildDTO(creditCardUuid, Collections.singleton(paymentRandomUuid)).get(0));
+        .thenReturn(buildDTO(creditCardUuid).get(0));
     when(mapper.map(buildEntity(creditCardUuid, transactionRandomUuid).get(1)))
-        .thenReturn(buildDTO(creditCardUuid, Collections.singleton(paymentRandomUuid)).get(1));
+        .thenReturn(buildDTO(creditCardUuid).get(1));
     when(mapper.map(buildEntity(creditCardUuid, transactionRandomUuid).get(2)))
-        .thenReturn(buildDTO(creditCardUuid, Collections.singleton(paymentRandomUuid)).get(2));
+        .thenReturn(buildDTO(creditCardUuid).get(2));
     var response = service.listAll();
 
     assertThat(response, is(equalTo(expectedResponse)));
@@ -123,23 +121,22 @@ class CreditCardServiceTest {
     var creditCardUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var cardNumber = "0000 2222 1111 2222";
     var securityCode = "007";
-    var pastOwnerName = "So-and-so";
-    var thenOwnerName = "So-and-so-more";
+    var ownerName = "So-and-so";
     var deletedDate = LocalDateTime.now();
     var transactionRandomUuid = UUID.randomUUID();
     var paymentRandomUuid = ImmutableList.of(UUID.randomUUID());
     var creditCard =
         buildCreditCard(
-            creditCardUuid, transactionRandomUuid, cardNumber, pastOwnerName, securityCode);
+            creditCardUuid, transactionRandomUuid, cardNumber, ownerName, securityCode);
     var deletedCard =
         buildCreditCard(
-            creditCardUuid, transactionRandomUuid, cardNumber, pastOwnerName, securityCode);
+            creditCardUuid, transactionRandomUuid, cardNumber, ownerName, securityCode);
     var givenArgument =
         buildCreditCardDTO(
-            creditCardUuid, paymentRandomUuid, cardNumber, thenOwnerName, securityCode);
+            creditCardUuid, paymentRandomUuid, cardNumber, ownerName, securityCode);
     CreditCardDTO expectedResponse =
         buildCreditCardDTO(
-            creditCardUuid, paymentRandomUuid, cardNumber, thenOwnerName, securityCode);
+            creditCardUuid, paymentRandomUuid, cardNumber, ownerName, securityCode);
     givenArgument.setDeletedDate(deletedDate);
 
     when(mapper.map(givenArgument)).thenReturn(creditCard);
@@ -177,8 +174,7 @@ class CreditCardServiceTest {
             creditCardUuid, transactionRandomUuid, "0002 2222 1111 2222", "So-and-so-Jr", "009"));
   }
 
-  private ImmutableList<CreditCardDTO> buildDTO(
-      UUID creditCardUuid, Collection<UUID> paymentRandomUuid) {
+  private ImmutableList<CreditCardDTO> buildDTO(UUID creditCardUuid) {
     return ImmutableList.of(
         buildCreditCardDTO(creditCardUuid, null, "0000 2222 1111 2222", "So-and-so", "007"),
         buildCreditCardDTO(creditCardUuid, null, "0001 2222 1111 2222", "So-and-so-Jr", "008"),
