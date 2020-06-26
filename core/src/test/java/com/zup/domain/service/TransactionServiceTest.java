@@ -39,25 +39,20 @@ class TransactionServiceTest {
     var transactionRandomUuid = UUID.randomUUID();
     var creditCardRandomUuid = UUID.randomUUID();
     var chargedDate = LocalDate.of(2020, 12, 19);
-    var expectedResponse =
-        buildDTO(uuid, chargedDate, transactionRandomUuid, creditCardRandomUuid);
+    var expectedResponse = buildDTO(uuid, chargedDate, transactionRandomUuid, creditCardRandomUuid);
 
     when(repository.findAll())
-        .thenReturn(
-            (buildEntity(uuid, chargedDate, transactionRandomUuid, creditCardRandomUuid)));
+        .thenReturn((buildEntity(uuid, chargedDate, transactionRandomUuid, creditCardRandomUuid)));
     when(mapper.map(
-            buildEntity(uuid, chargedDate, transactionRandomUuid, creditCardRandomUuid)
-                .get(0)))
+            buildEntity(uuid, chargedDate, transactionRandomUuid, creditCardRandomUuid).get(0)))
         .thenReturn(
             buildDTO(uuid, chargedDate, transactionRandomUuid, creditCardRandomUuid).get(0));
     when(mapper.map(
-            buildEntity(uuid, chargedDate, transactionRandomUuid, creditCardRandomUuid)
-                .get(1)))
+            buildEntity(uuid, chargedDate, transactionRandomUuid, creditCardRandomUuid).get(1)))
         .thenReturn(
             buildDTO(uuid, chargedDate, transactionRandomUuid, creditCardRandomUuid).get(1));
     when(mapper.map(
-            buildEntity(uuid, chargedDate, transactionRandomUuid, creditCardRandomUuid)
-                .get(2)))
+            buildEntity(uuid, chargedDate, transactionRandomUuid, creditCardRandomUuid).get(2)))
         .thenReturn(
             buildDTO(uuid, chargedDate, transactionRandomUuid, creditCardRandomUuid).get(2));
     var response = service.listAll();
