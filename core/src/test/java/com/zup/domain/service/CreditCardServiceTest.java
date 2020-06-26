@@ -154,8 +154,7 @@ class CreditCardServiceTest {
         .creditCardId(creditCardUuid)
         .cardNumber(cardNumber)
         .ownerName(ownerName)
-        .transaction(
-            ImmutableList.of(Transaction.builder().transactionId(transactionRandomUuid).build()))
+        .transaction(Transaction.builder().transactionId(transactionRandomUuid).build())
         .securityCode(securityCode)
         .build();
   }
