@@ -4,6 +4,7 @@ import static java.util.Optional.ofNullable;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
@@ -12,6 +13,7 @@ import com.google.common.collect.ImmutableList;
 import com.zup.domain.dto.CreditCardDTO;
 import com.zup.domain.entity.CreditCard;
 import com.zup.domain.entity.Transaction;
+import com.zup.domain.exception.message.NotFoundedException;
 import com.zup.domain.mapper.CreditCardMapper;
 import com.zup.infrasctructure.repository.CreditCardRepository;
 import java.time.LocalDateTime;
@@ -31,7 +33,7 @@ class CreditCardServiceTest {
   @Mock CreditCardMapper mapper;
 
   @Test
-  void listAll() {
+  void mustReturnAllCreditCardsWhenListAll() {
 
     var creditCardUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
@@ -50,7 +52,7 @@ class CreditCardServiceTest {
   }
 
   @Test
-  void findOneById() {
+  void mustReturnOneWhenFindById() throws NotFoundedException {
     var creditCardUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
     var cardNumber = "0000 2222 1111 2222";
@@ -70,7 +72,7 @@ class CreditCardServiceTest {
   }
 
   @Test
-  void save() {
+  void mustPerformSaveAndReturnResponse() {
 
     var creditCardUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var cardNumber = "0000 2222 1111 2222";
@@ -92,7 +94,7 @@ class CreditCardServiceTest {
   }
 
   @Test
-  void update() {
+  void mustPerformUpdateAndReturnResponseWithOtherOwnerName() throws NotFoundedException {
     var creditCardUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var cardNumber = "0000 2222 1111 2222";
     var securityCode = "007";
@@ -117,7 +119,7 @@ class CreditCardServiceTest {
   }
 
   @Test
-  void delete() {
+  void mustPerformDeleteAndReturnResponseWithDeletedDate() throws NotFoundedException {
     var creditCardUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var cardNumber = "0000 2222 1111 2222";
     var securityCode = "007";
@@ -142,6 +144,46 @@ class CreditCardServiceTest {
     var response = service.delete(givenArgument);
 
     assertThat(response, is(equalTo(expectedResponse)));
+  }
+
+  @Test()
+  void mustRespondWithNotFoundExceptionWhenFindByIdGivenNull() {
+    assertThrows(NotFoundedException.class, () -> service.findOneById(null));
+  }
+
+  @Test()
+  void mustRespondWithNotFoundExceptionWhenUpdateGivenNull() {
+    assertThrows(NotFoundedException.class, () -> service.update(null));
+  }
+
+  @Test()
+  void mustRespondWithNotFoundExceptionWhenDeleteGivenNull() {
+    assertThrows(NotFoundedException.class, () -> service.delete(null));
+  }
+
+  @Test()
+  void mustRespondWithNotFoundExceptionWhenFindById() {
+    var uuid = UUID.randomUUID();
+
+    assertThrows(NotFoundedException.class, () -> service.findOneById(uuid));
+  }
+
+  @Test()
+  void mustRespondWithNotFoundExceptionWhenUpdate() {
+    var uuid = UUID.randomUUID();
+
+    assertThrows(
+        NotFoundedException.class,
+        () -> service.update(CreditCardDTO.builder().creditCardId(uuid).build()));
+  }
+
+  @Test()
+  void mustRespondWithNotFoundExceptionWhenDelete() {
+    var uuid = UUID.randomUUID();
+
+    assertThrows(
+        NotFoundedException.class,
+        () -> service.delete(CreditCardDTO.builder().creditCardId(uuid).build()));
   }
 
   private CreditCard buildCreditCard(

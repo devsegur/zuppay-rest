@@ -4,6 +4,7 @@ import static java.util.Optional.ofNullable;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
@@ -13,6 +14,7 @@ import com.zup.domain.dto.TransactionDTO;
 import com.zup.domain.entity.CreditCard;
 import com.zup.domain.entity.Payment;
 import com.zup.domain.entity.Transaction;
+import com.zup.domain.exception.message.NotFoundedException;
 import com.zup.domain.mapper.TransactionMapper;
 import com.zup.infrasctructure.repository.TransactionRepository;
 import java.time.LocalDate;
@@ -33,7 +35,7 @@ class TransactionServiceTest {
   @Mock TransactionMapper mapper;
 
   @Test
-  void listAll() {
+  void mustReturnAllTransactionsWhenListAll() {
 
     var uuid = UUID.fromString("4002-8922-2490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
@@ -61,7 +63,7 @@ class TransactionServiceTest {
   }
 
   @Test
-  void findOneById() {
+  void mustReturnOneWhenFindById() throws NotFoundedException {
     var uuid = UUID.fromString("4002-8922-2490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
     var creditCardUuid = UUID.randomUUID();
@@ -78,7 +80,7 @@ class TransactionServiceTest {
   }
 
   @Test
-  void save() {
+  void mustPerformSaveAndReturnResponse() {
 
     var uuid = UUID.fromString("4002-8922-2490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
@@ -97,7 +99,7 @@ class TransactionServiceTest {
   }
 
   @Test
-  void update() {
+  void mustPerformUpdateAndReturnResponseWithOtherDescription() throws NotFoundedException {
     var uuid = UUID.fromString("4002-8922-2490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
     var creditCardUuid = UUID.randomUUID();
@@ -118,7 +120,7 @@ class TransactionServiceTest {
   }
 
   @Test
-  void delete() {
+  void mustPerformDeleteAndReturnResponseWithDeletedDate() throws NotFoundedException {
     var uuid = UUID.fromString("4002-8922-2490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
     var creditCardUuid = UUID.randomUUID();
@@ -143,6 +145,46 @@ class TransactionServiceTest {
     var response = service.delete(givenTransactionDTO);
 
     assertThat(response, is(equalTo(expectedResponse)));
+  }
+
+  @Test()
+  void mustRespondWithNotFoundExceptionWhenFindByIdGivenNull() {
+    assertThrows(NotFoundedException.class, () -> service.findOneById(null));
+  }
+
+  @Test()
+  void mustRespondWithNotFoundExceptionWhenUpdateGivenNull() {
+    assertThrows(NotFoundedException.class, () -> service.update(null));
+  }
+
+  @Test()
+  void mustRespondWithNotFoundExceptionWhenDeleteGivenNull() {
+    assertThrows(NotFoundedException.class, () -> service.delete(null));
+  }
+
+  @Test()
+  void mustRespondWithNotFoundExceptionWhenFindById() {
+    var uuid = UUID.randomUUID();
+
+    assertThrows(NotFoundedException.class, () -> service.findOneById(uuid));
+  }
+
+  @Test()
+  void mustRespondWithNotFoundExceptionWhenUpdate() {
+    var uuid = UUID.randomUUID();
+
+    assertThrows(
+        NotFoundedException.class,
+        () -> service.update(TransactionDTO.builder().transactionId(uuid).build()));
+  }
+
+  @Test()
+  void mustRespondWithNotFoundExceptionWhenDelete() {
+    var uuid = UUID.randomUUID();
+
+    assertThrows(
+        NotFoundedException.class,
+        () -> service.delete(TransactionDTO.builder().transactionId(uuid).build()));
   }
 
   private List<Transaction> buildEntity(
