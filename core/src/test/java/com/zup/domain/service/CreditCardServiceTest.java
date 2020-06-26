@@ -126,17 +126,13 @@ class CreditCardServiceTest {
     var transactionRandomUuid = UUID.randomUUID();
     var paymentRandomUuid = ImmutableList.of(UUID.randomUUID());
     var creditCard =
-        buildCreditCard(
-            creditCardUuid, transactionRandomUuid, cardNumber, ownerName, securityCode);
+        buildCreditCard(creditCardUuid, transactionRandomUuid, cardNumber, ownerName, securityCode);
     var deletedCard =
-        buildCreditCard(
-            creditCardUuid, transactionRandomUuid, cardNumber, ownerName, securityCode);
+        buildCreditCard(creditCardUuid, transactionRandomUuid, cardNumber, ownerName, securityCode);
     var givenArgument =
-        buildCreditCardDTO(
-            creditCardUuid, paymentRandomUuid, cardNumber, ownerName, securityCode);
+        buildCreditCardDTO(creditCardUuid, paymentRandomUuid, cardNumber, ownerName, securityCode);
     CreditCardDTO expectedResponse =
-        buildCreditCardDTO(
-            creditCardUuid, paymentRandomUuid, cardNumber, ownerName, securityCode);
+        buildCreditCardDTO(creditCardUuid, paymentRandomUuid, cardNumber, ownerName, securityCode);
     givenArgument.setDeletedDate(deletedDate);
 
     when(mapper.map(givenArgument)).thenReturn(creditCard);

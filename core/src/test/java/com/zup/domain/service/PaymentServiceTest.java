@@ -121,7 +121,8 @@ class PaymentServiceTest {
     var deletedDate = LocalDateTime.now();
     var givenPaymentDTO =
         buildPaymentDTO(paymentUuid, transactionRandomUuid, creditCardUuid, thenDescription);
-    Payment payment = buildPayment(paymentUuid, transactionRandomUuid, creditCardUuid, thenDescription);
+    Payment payment =
+        buildPayment(paymentUuid, transactionRandomUuid, creditCardUuid, thenDescription);
     payment.setDeletedDate(deletedDate);
     Payment deletedPayment =
         buildPayment(paymentUuid, transactionRandomUuid, creditCardUuid, thenDescription);
