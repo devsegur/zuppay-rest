@@ -4,6 +4,8 @@ import static java.util.Optional.ofNullable;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 import com.google.common.collect.ImmutableList;
@@ -32,7 +34,7 @@ class CreditCardServiceTest {
   @Test
   void listAll() {
 
-    var creditCardUuid = UUID.fromString("4002-8922-1490-9141-2222");
+    var creditCardUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
     var paymentRandomUuid = UUID.randomUUID();
     var expectedResponse = buildDTO(creditCardUuid, Collections.singleton(paymentRandomUuid));
@@ -51,7 +53,7 @@ class CreditCardServiceTest {
 
   @Test
   void findOneById() {
-    var creditCardUuid = UUID.fromString("4002-8922-1490-9141-2222");
+    var creditCardUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
     var cardNumber = "0000 2222 1111 2222";
     var securityCode = "007";
@@ -72,7 +74,7 @@ class CreditCardServiceTest {
   @Test
   void save() {
 
-    var creditCardUuid = UUID.fromString("4002-8922-1490-9141-2222");
+    var creditCardUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var cardNumber = "0000 2222 1111 2222";
     var securityCode = "007";
     var ownerName = "So-and-so";
@@ -93,7 +95,7 @@ class CreditCardServiceTest {
 
   @Test
   void update() {
-    var creditCardUuid = UUID.fromString("4002-8922-1490-9141-2222");
+    var creditCardUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var cardNumber = "0000 2222 1111 2222";
     var securityCode = "007";
     var pastOwnerName = "So-and-so";
@@ -118,7 +120,7 @@ class CreditCardServiceTest {
 
   @Test
   void delete() {
-    var creditCardUuid = UUID.fromString("4002-8922-1490-9141-2222");
+    var creditCardUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var cardNumber = "0000 2222 1111 2222";
     var securityCode = "007";
     var pastOwnerName = "So-and-so";
@@ -129,16 +131,22 @@ class CreditCardServiceTest {
     var creditCard =
         buildCreditCard(
             creditCardUuid, transactionRandomUuid, cardNumber, pastOwnerName, securityCode);
+    var deletedCard =
+        buildCreditCard(
+            creditCardUuid, transactionRandomUuid, cardNumber, pastOwnerName, securityCode);
+    var givenArgument =
+        buildCreditCardDTO(
+            creditCardUuid, paymentRandomUuid, cardNumber, thenOwnerName, securityCode);
     CreditCardDTO expectedResponse =
         buildCreditCardDTO(
             creditCardUuid, paymentRandomUuid, cardNumber, thenOwnerName, securityCode);
-    expectedResponse.setDeletedDate(deletedDate);
+    givenArgument.setDeletedDate(deletedDate);
 
-    when(mapper.map(expectedResponse)).thenReturn(creditCard);
+    when(mapper.map(givenArgument)).thenReturn(creditCard);
     when(mapper.map(creditCard)).thenReturn(expectedResponse);
-    when(repository.save(creditCard)).thenReturn(creditCard);
-    when(repository.existsById(expectedResponse.getCreditCardId())).thenReturn(true);
-    var response = service.delete(expectedResponse);
+    doReturn(deletedCard).when(repository).save(any());
+    doReturn(true).when(repository).existsById(UUID.fromString(String.valueOf(creditCardUuid)));
+    var response = service.delete(givenArgument);
 
     assertThat(response, is(equalTo(expectedResponse)));
   }

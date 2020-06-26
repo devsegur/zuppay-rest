@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)
@@ -13,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
+@ToString(callSuper = true)
 public class CreditCardDTO extends BaseDTO {
 
   private UUID creditCardId;
