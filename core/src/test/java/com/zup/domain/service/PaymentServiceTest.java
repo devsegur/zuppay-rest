@@ -38,7 +38,7 @@ class PaymentServiceTest {
   @Mock PaymentMapper mapper;
 
   @Test
-  void  mustReturnAllPaymentsWhenListAll() {
+  void mustReturnAllPaymentsWhenListAll() {
 
     var paymentUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
