@@ -16,6 +16,7 @@ import com.zup.domain.entity.Payment;
 import com.zup.domain.entity.Transaction;
 import com.zup.domain.enumerations.CurrencyEnum;
 import com.zup.domain.enumerations.CurrencyEnumDTO;
+import com.zup.domain.exception.message.AlreadySavedException;
 import com.zup.domain.exception.message.NotFoundedException;
 import com.zup.domain.mapper.PaymentMapper;
 import com.zup.infrasctructure.repository.PaymentRepository;
@@ -29,6 +30,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 
 @ExtendWith(MockitoExtension.class)
 class PaymentServiceTest {
@@ -64,34 +67,54 @@ class PaymentServiceTest {
     var transactionRandomUuid = UUID.randomUUID();
     var creditCardUuid = UUID.randomUUID();
     var description = "New Product";
-    var Payment = buildPayment(paymentUuid, transactionRandomUuid, creditCardUuid, description);
+    var payment = buildPayment(paymentUuid, transactionRandomUuid, creditCardUuid, description);
     var expectedResponse =
         buildPaymentDTO(paymentUuid, transactionRandomUuid, creditCardUuid, description);
 
-    when(repository.findById(paymentUuid)).thenReturn(ofNullable(Payment));
-    when(mapper.map(Payment)).thenReturn(expectedResponse);
+    when(repository.findById(paymentUuid)).thenReturn(ofNullable(payment));
+    when(mapper.map(payment)).thenReturn(expectedResponse);
     var response = service.findOneById(paymentUuid);
 
     assertThat(response, is(equalTo(expectedResponse)));
   }
 
   @Test
-  void mustPerformSaveAndReturnResponse() {
+  void mustPerformSaveAndReturnResponse() throws AlreadySavedException {
 
     var paymentUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var transactionRandomUuid = UUID.randomUUID();
     var creditCardUuid = UUID.randomUUID();
     var description = "New Product";
-    var Payment = buildPayment(paymentUuid, transactionRandomUuid, creditCardUuid, description);
+    var payment = buildPayment(paymentUuid, transactionRandomUuid, creditCardUuid, description);
     var expectedResponse =
         buildPaymentDTO(paymentUuid, transactionRandomUuid, creditCardUuid, description);
 
-    when(mapper.map(expectedResponse)).thenReturn(Payment);
-    when(mapper.map(Payment)).thenReturn(expectedResponse);
-    when(repository.save(Payment)).thenReturn(Payment);
+    when(mapper.map(expectedResponse)).thenReturn(payment);
+    when(mapper.map(payment)).thenReturn(expectedResponse);
+    when(repository.save(payment)).thenReturn(payment);
     var response = service.save(expectedResponse);
 
     assertThat(response, is(equalTo(expectedResponse)));
+  }
+
+  @Test
+  void mustThrowAlreadySavedResponse() {
+
+    var paymentUuid = UUID.fromString("4002-8922-2490-9141-2222");
+    var transactionRandomUuid = UUID.randomUUID();
+    var creditCardUuid = UUID.randomUUID();
+    var description = "New Product";
+    var matcher = ExampleMatcher.matching().withIgnorePaths("paymentId");
+    var payment = buildPayment(paymentUuid, transactionRandomUuid, creditCardUuid, description);
+    var givenParam =
+        buildPaymentDTO(paymentUuid, transactionRandomUuid, creditCardUuid, description);
+
+    when(mapper.map(givenParam)).thenReturn(payment);
+    when(repository.exists(Example.of(payment, matcher))).thenReturn(true);
+    AlreadySavedException exception =
+        assertThrows(AlreadySavedException.class, () -> service.save(givenParam));
+
+    assertThat(exception.getMessage(), is(equalTo("PAYMENT_ALREADY_SAVED")));
   }
 
   @Test
@@ -101,13 +124,13 @@ class PaymentServiceTest {
     var creditCardUuid = UUID.randomUUID();
     var thenDescription = "New Product";
     var pastDescription = "Old Product";
-    var Payment = buildPayment(paymentUuid, transactionRandomUuid, creditCardUuid, pastDescription);
+    var payment = buildPayment(paymentUuid, transactionRandomUuid, creditCardUuid, pastDescription);
     var expectedResponse =
         buildPaymentDTO(paymentUuid, transactionRandomUuid, creditCardUuid, thenDescription);
 
-    when(mapper.map(expectedResponse)).thenReturn(Payment);
-    when(mapper.map(Payment)).thenReturn(expectedResponse);
-    when(repository.save(Payment)).thenReturn(Payment);
+    when(mapper.map(expectedResponse)).thenReturn(payment);
+    when(mapper.map(payment)).thenReturn(expectedResponse);
+    when(repository.save(payment)).thenReturn(payment);
     when(repository.existsById(expectedResponse.getPaymentId())).thenReturn(true);
     var response = service.update(expectedResponse);
 

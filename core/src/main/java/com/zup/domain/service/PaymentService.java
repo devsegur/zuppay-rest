@@ -1,20 +1,25 @@
 package com.zup.domain.service;
 
+import static java.util.Optional.of;
 import static java.util.Optional.ofNullable;
 
 import com.zup.domain.dto.PaymentDTO;
 import com.zup.domain.entity.Payment;
+import com.zup.domain.exception.message.AlreadySavedException;
 import com.zup.domain.exception.message.NotFoundedException;
 import com.zup.domain.mapper.PaymentMapper;
 import com.zup.infrasctructure.repository.PaymentRepository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.SerializationUtils;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,9 +40,20 @@ public class PaymentService implements CrudService<PaymentDTO> {
   }
 
   @Override
-  public PaymentDTO save(PaymentDTO dto) {
-    var entity = mapper.map(dto);
-    return mapper.map(repository.save(entity));
+  public PaymentDTO save(PaymentDTO dto) throws AlreadySavedException {
+
+    var payment = mapper.map(dto);
+
+    return of(repository)
+        .filter(onlyWhenDTOIsNotNull(dto))
+        .filter(onlyWhenNotAlreadySavedPayment(payment))
+        .map(save(payment))
+        .map(mapper::map)
+        .orElseThrow(AlreadySavedException::new);
+  }
+
+  private Predicate<PaymentRepository> onlyWhenDTOIsNotNull(PaymentDTO dto) {
+    return paymentRepository -> Objects.nonNull(dto);
   }
 
   @Override
@@ -71,5 +87,19 @@ public class PaymentService implements CrudService<PaymentDTO> {
       clonedPayment.setDeletedDate(LocalDateTime.now());
       return clonedPayment;
     };
+  }
+
+  private Function<PaymentRepository, Payment> save(Payment payment) {
+    return paymentRepository -> paymentRepository.save(payment);
+  }
+
+  private Predicate<PaymentRepository> onlyWhenNotAlreadySavedPayment(Payment payment) {
+    return paymentRepository -> !paymentRepository.exists(getExample(payment));
+  }
+
+  private Example<Payment> getExample(Payment payment) {
+    var matcher = ExampleMatcher.matching().withIgnorePaths("paymentId");
+    var example = Example.of(payment, matcher);
+    return example;
   }
 }
