@@ -13,6 +13,7 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import javassist.tools.web.BadHttpRequest;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.SerializationUtils;
 import org.springframework.stereotype.Service;
@@ -35,9 +36,12 @@ public class CreditCardService implements CrudService<CreditCardDTO> {
   }
 
   @Override
-  public CreditCardDTO save(CreditCardDTO dto) {
-    var entity = mapper.map(dto);
-    return mapper.map(repository.save(entity));
+  public CreditCardDTO save(CreditCardDTO dto) throws BadHttpRequest {
+    return ofNullable(dto)
+        .map(mapper::map)
+        .map(repository::save)
+        .map(mapper::map)
+        .orElseThrow(BadHttpRequest::new);
   }
 
   @Override

@@ -19,6 +19,7 @@ import com.zup.infrasctructure.repository.CreditCardRepository;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.UUID;
+import javassist.tools.web.BadHttpRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -72,7 +73,7 @@ class CreditCardServiceTest {
   }
 
   @Test
-  void mustPerformSaveAndReturnResponse() {
+  void mustPerformSaveAndReturnResponse() throws BadHttpRequest {
 
     var creditCardUuid = UUID.fromString("4002-8922-2490-9141-2222");
     var cardNumber = "0000 2222 1111 2222";

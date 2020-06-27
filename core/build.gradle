@@ -5,6 +5,7 @@ dependencies {
 	implementation project(":entity")
 
 	implementation "org.mapstruct:mapstruct:${mapperStructVersion}"
+	implementation "com.google.code.gson:gson:${gsonVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-actuator"
 	implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"

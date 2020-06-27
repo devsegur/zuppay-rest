@@ -52,10 +52,6 @@ public class PaymentService implements CrudService<PaymentDTO> {
         .orElseThrow(AlreadySavedException::new);
   }
 
-  private Predicate<PaymentRepository> onlyWhenDTOIsNotNull(PaymentDTO dto) {
-    return paymentRepository -> Objects.nonNull(dto);
-  }
-
   @Override
   public PaymentDTO update(PaymentDTO dto) throws NotFoundedException {
     return ofNullable(dto)
@@ -89,6 +85,10 @@ public class PaymentService implements CrudService<PaymentDTO> {
     };
   }
 
+  private Predicate<PaymentRepository> onlyWhenDTOIsNotNull(PaymentDTO dto) {
+    return paymentRepository -> Objects.nonNull(dto);
+  }
+
   private Function<PaymentRepository, Payment> save(Payment payment) {
     return paymentRepository -> paymentRepository.save(payment);
   }
@@ -99,7 +99,6 @@ public class PaymentService implements CrudService<PaymentDTO> {
 
   private Example<Payment> getExample(Payment payment) {
     var matcher = ExampleMatcher.matching().withIgnorePaths("paymentId");
-    var example = Example.of(payment, matcher);
-    return example;
+    return Example.of(payment, matcher);
   }
 }

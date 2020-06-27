@@ -5,6 +5,7 @@ import com.zup.domain.exception.message.AlreadySavedException;
 import com.zup.domain.exception.message.NotFoundedException;
 import java.util.Collection;
 import java.util.UUID;
+import javassist.tools.web.BadHttpRequest;
 
 public interface CrudController<T extends BaseDTO> {
 
@@ -12,7 +13,7 @@ public interface CrudController<T extends BaseDTO> {
 
   T findOneById(UUID id) throws NotFoundedException;
 
-  T save(T dto) throws AlreadySavedException;
+  T save(T dto) throws AlreadySavedException, BadHttpRequest;
 
   T update(T dto) throws NotFoundedException;
 
