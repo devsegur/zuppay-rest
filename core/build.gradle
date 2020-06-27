@@ -3,6 +3,7 @@
 dependencies {
 	implementation project(":dto")
 	implementation project(":entity")
+	implementation project(":feign")
 
 	implementation "org.mapstruct:mapstruct:${mapperStructVersion}"
 	implementation "com.google.code.gson:gson:${gsonVersion}"

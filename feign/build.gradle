@@ -1,0 +1,7 @@
+dependencies {
+	implementation project(":dto")
+
+	compileOnly "org.projectlombok:lombok:${lombokVersion}"
+	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${springCloudContractVersion}"
+}
