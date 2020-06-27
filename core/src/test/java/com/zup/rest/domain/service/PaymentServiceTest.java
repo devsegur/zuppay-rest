@@ -38,8 +38,7 @@ class PaymentServiceTest {
 
   @InjectMocks PaymentService service;
   @Mock PaymentRepository repository;
-  @Mock
-  PaymentMapper mapper;
+  @Mock PaymentMapper mapper;
 
   @Test
   void mustReturnAllPaymentsWhenListAll() {
