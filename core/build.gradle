@@ -22,4 +22,6 @@ dependencies {
 	}
 	testImplementation "org.testinfected.hamcrest-matchers:core-matchers:${coreMatchersVersion}"
 	annotationProcessor "org.mapstruct:mapstruct-processor:${mapperStructVersion}"
+	implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+	implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
 }
