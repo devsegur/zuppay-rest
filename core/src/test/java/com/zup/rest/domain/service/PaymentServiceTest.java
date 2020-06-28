@@ -19,7 +19,7 @@ import com.zup.rest.domain.enumerations.CurrencyEnumDTO;
 import com.zup.rest.domain.exception.message.AlreadySavedException;
 import com.zup.rest.domain.exception.message.NotFoundedException;
 import com.zup.rest.domain.mapper.PaymentMapper;
-import com.zup.rest.infrasctructure.repository.PaymentRepository;
+import com.zup.rest.infrastructure.repository.PaymentRepository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

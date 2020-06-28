@@ -1,4 +1,4 @@
-package com.zup.rest.infrasctructure.controller;
+package com.zup.rest.infrastructure.controller;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

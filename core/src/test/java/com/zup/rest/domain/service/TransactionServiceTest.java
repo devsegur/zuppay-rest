@@ -16,7 +16,7 @@ import com.zup.rest.domain.entity.Payment;
 import com.zup.rest.domain.entity.Transaction;
 import com.zup.rest.domain.exception.message.NotFoundedException;
 import com.zup.rest.domain.mapper.TransactionMapper;
-import com.zup.rest.infrasctructure.repository.TransactionRepository;
+import com.zup.rest.infrastructure.repository.TransactionRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

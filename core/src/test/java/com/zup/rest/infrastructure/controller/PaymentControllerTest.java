@@ -1,4 +1,4 @@
-package com.zup.rest.infrasctructure.controller;
+package com.zup.rest.infrastructure.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

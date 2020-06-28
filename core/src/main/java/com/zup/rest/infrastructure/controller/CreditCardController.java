@@ -1,4 +1,4 @@
-package com.zup.rest.infrasctructure.controller;
+package com.zup.rest.infrastructure.controller;
 
 import com.zup.rest.domain.dto.CreditCardDTO;
 import com.zup.rest.domain.exception.message.NotFoundedException;

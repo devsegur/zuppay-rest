@@ -15,7 +15,7 @@ import com.zup.rest.domain.entity.CreditCard;
 import com.zup.rest.domain.entity.Transaction;
 import com.zup.rest.domain.exception.message.NotFoundedException;
 import com.zup.rest.domain.mapper.CreditCardMapper;
-import com.zup.rest.infrasctructure.repository.CreditCardRepository;
+import com.zup.rest.infrastructure.repository.CreditCardRepository;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.zup.rest.infrasctructure.repository;
+package com.zup.rest.infrastructure.repository;
 
 import com.zup.rest.domain.entity.Payment;
 import java.util.UUID;

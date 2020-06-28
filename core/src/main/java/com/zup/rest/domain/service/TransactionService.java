@@ -6,7 +6,7 @@ import com.zup.rest.domain.dto.TransactionDTO;
 import com.zup.rest.domain.entity.Transaction;
 import com.zup.rest.domain.exception.message.NotFoundedException;
 import com.zup.rest.domain.mapper.TransactionMapper;
-import com.zup.rest.infrasctructure.repository.TransactionRepository;
+import com.zup.rest.infrastructure.repository.TransactionRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;

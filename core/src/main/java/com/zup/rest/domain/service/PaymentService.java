@@ -8,7 +8,7 @@ import com.zup.rest.domain.entity.Payment;
 import com.zup.rest.domain.exception.message.AlreadySavedException;
 import com.zup.rest.domain.exception.message.NotFoundedException;
 import com.zup.rest.domain.mapper.PaymentMapper;
-import com.zup.rest.infrasctructure.repository.PaymentRepository;
+import com.zup.rest.infrastructure.repository.PaymentRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
