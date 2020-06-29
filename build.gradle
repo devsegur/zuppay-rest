@@ -9,7 +9,7 @@ buildscript {
 plugins {
 	id "io.spring.dependency-management" version "${dependencyManagementVersion}"
 	id "org.springframework.cloud.contract" version "${springCloudContractVersion}" apply false
-	id "org.springframework.boot" version "${springBootVersion}" apply false
+	id "org.springframework.boot" version "${springBootVersion}"
 	id "java"
 	id "base"
 	id "idea"
@@ -41,6 +41,10 @@ allprojects {
 			indentWithTabs() // or spaces. Takes an integer argument if you don"t like 4
 			endWithNewline()
 		}
+	}
+
+	bootJar {
+		mainClassName = 'com.zup.rest.ZuppayRestMainApplication'
 	}
 
 	test {
