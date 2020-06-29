@@ -13,6 +13,7 @@ dependencies {
 	implementation "de.codecentric:spring-boot-admin-starter-client"
 	implementation "org.springframework.cloud:spring-cloud-starter"
 	implementation "org.springframework.cloud:spring-cloud-starter-config"
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${springCloudContractVersion}"
 	implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:${netflixEurekaClientVersion}"
 	implementation "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
 	runtimeOnly "io.micrometer:micrometer-registry-prometheus"

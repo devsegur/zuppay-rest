@@ -8,7 +8,9 @@ import com.zup.rest.domain.entity.Payment;
 import com.zup.rest.domain.exception.message.AlreadySavedException;
 import com.zup.rest.domain.exception.message.NotFoundedException;
 import com.zup.rest.domain.mapper.PaymentMapper;
+import com.zup.rest.infrastructure.feign.ZuppayRestFeign;
 import com.zup.rest.infrastructure.repository.PaymentRepository;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 public class PaymentService implements CrudService<PaymentDTO> {
 
   private final PaymentRepository repository;
+  private final ZuppayRestFeign feign;
   private final PaymentMapper mapper;
 
   @Override
@@ -48,6 +51,7 @@ public class PaymentService implements CrudService<PaymentDTO> {
         .filter(onlyWhenDTOIsNotNull(dto))
         .filter(onlyWhenNotAlreadySavedPayment(payment))
         .map(save(payment))
+        .map(dueTodayPayment(dto))
         .map(mapper::map)
         .orElseThrow(AlreadySavedException::new);
   }
@@ -71,6 +75,15 @@ public class PaymentService implements CrudService<PaymentDTO> {
         .map(repository::save)
         .map(mapper::map)
         .orElseThrow(NotFoundedException::new);
+  }
+
+  private Function<Payment, Payment> dueTodayPayment(PaymentDTO dto) {
+    return payment1 -> {
+      if (dto.getDueDate().equals(LocalDate.now())) {
+        feign.createTransaction();
+      }
+      return payment1;
+    };
   }
 
   private Predicate<PaymentDTO> ifExistsOnDatabase() {
